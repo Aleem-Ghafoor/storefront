@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+
+{% block title %}Home | Storefront{% endblock %}
+
+{% block content %}
+<section class="hero-section">
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <span class="eyebrow">New season arrivals</span>
+      <h1>Designed for everyday living.</h1>
+      <p>
+        Discover premium essentials, limited collections, and everyday pieces
+        curated for a modern lifestyle.
+      </p>
+      <div class="hero-actions">
+        <a href="{% url 'product_list' %}" class="btn btn-primary">Shop collection</a>
+        <a href="{% url 'tag_list' %}" class="btn btn-secondary">Browse tags</a>
+      </div>
+      <div class="stat-row">
+        <div>
+          <strong>2.4k+</strong>
+          <span>happy shoppers</span>
+        </div>
+        <div>
+          <strong>120+</strong>
+          <span>products</span>
+        </div>
+        <div>
+          <strong>4.9/5</strong>
+          <span>customer rating</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="feature-card large-card">
+        <span class="mini-label">Best seller</span>
+        <h3>{{ featured_product.title|default:"Signature Chair" }}</h3>
+        <p>{{ featured_product.description|truncatewords:16|default:"Crafted for comfort, detail, and everyday confidence." }}</p>
+        <div class="feature-meta">
+          <span>${{ featured_product.price|default:"129.00" }}</span>
+          <a href="{% if featured_product %}{% url 'product_detail' featured_product.product_id %}{% else %}{% url 'product_list' %}{% endif %}">View item</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="content-section">
+  <div class="container">
+    <div class="section-heading">
+      <div>
+        <span class="eyebrow">Featured products</span>
+        <h2>Popular picks this week</h2>
+      </div>
+      <a href="{% url 'product_list' %}" class="text-link">View all products</a>
+    </div>
+
+    <div class="product-grid">
+      {% for product in featured_products %}
+        <article class="product-card">
+          <div class="product-image">
+            <span class="badge">{% if product.inventory > 0 %}In stock{% else %}Sold out{% endif %}</span>
+          </div>
+          <div class="product-body">
+            <div class="meta-row">
+              <span>{{ product.Collection_id.title }}</span>
+              <span>${{ product.price }}</span>
+            </div>
+            <h3>{{ product.title }}</h3>
+            <p>{{ product.description|truncatewords:14 }}</p>
+            <div class="card-actions">
+              <a href="{% url 'product_detail' product.product_id %}" class="btn btn-primary small">View details</a>
+            </div>
+          </div>
+        </article>
+      {% empty %}
+        <div class="empty-state full-width">
+          <p>No featured products are available yet.</p>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="content-section muted-section">
+  <div class="container">
+    <div class="section-heading">
+      <div>
+        <span class="eyebrow">Collections</span>
+        <h2>Shop by category</h2>
+      </div>
+    </div>
+
+    <div class="collection-grid">
+      {% for collection in collections %}
+      <div class="collection-card">
+        <div class="collection-info">
+          <span class="mini-label">Collection</span>
+          <h3>{{ collection.title }}</h3>
+          <p>{{ collection.products.count }} curated items</p>
+        </div>
+      </div>
+      {% empty %}
+      <div class="empty-state full-width">
+        <p>No collections have been added yet.</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="content-section">
+  <div class="container">
+    <div class="section-heading">
+      <div>
+        <span class="eyebrow">Popular now</span>
+        <h2>Best sellers</h2>
+      </div>
+    </div>
+
+    <div class="product-grid narrow-grid">
+      {% for product in popular_products %}
+        <article class="product-card compact-card">
+          <div class="product-image small-image"></div>
+          <div class="product-body">
+            <h3>{{ product.title }}</h3>
+            <p>${{ product.price }}</p>
+          </div>
+        </article>
+      {% empty %}
+        <div class="empty-state full-width">
+          <p>Popular products will appear here once inventory is added.</p>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="content-section muted-section">
+  <div class="container">
+    <div class="section-heading">
+      <div>
+        <span class="eyebrow">Tags</span>
+        <h2>Browse by style</h2>
+      </div>
+      <a href="{% url 'tag_list' %}" class="text-link">View all tags</a>
+    </div>
+
+    <div class="tag-cloud">
+      {% for tag in tags %}
+        <a href="{% url 'tag_detail' tag.id %}" class="tag-pill">{{ tag.label }}</a>
+      {% empty %}
+        <p class="empty-inline">No tags available yet.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

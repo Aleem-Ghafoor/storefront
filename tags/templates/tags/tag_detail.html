@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}{{ tag.label }} | Storefront{% endblock %}
+
+{% block content %}
+<section class="page-shell">
+  <div class="container">
+    <div class="page-header">
+      <h1>#{{ tag.label }}</h1>
+      <p>Products associated with this tag.</p>
+    </div>
+
+    {% if products %}
+      <div class="product-grid">
+        {% for product in products %}
+          <article class="product-card">
+            <div class="product-image">
+              <span class="badge">{% if product.inventory > 0 %}In stock{% else %}Sold out{% endif %}</span>
+            </div>
+            <div class="product-body">
+              <div class="meta-row">
+                <span>{{ product.Collection_id.title }}</span>
+                <span>${{ product.price }}</span>
+              </div>
+              <h3>{{ product.title }}</h3>
+              <p>{{ product.description|truncatewords:18 }}</p>
+              <div class="card-actions">
+                <a href="{% url 'product_detail' product.product_id %}" class="btn btn-primary small">View details</a>
+              </div>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="empty-state">
+        <p>No products are currently tagged with {{ tag.label }}.</p>
+        <a href="{% url 'tag_list' %}" class="btn btn-secondary">Back to tags</a>
+      </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

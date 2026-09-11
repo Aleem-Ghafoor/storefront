@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}{{ product.title }} | Storefront{% endblock %}
+
+{% block content %}
+<section class="page-shell">
+  <div class="container">
+    <div class="detail-layout">
+      <div class="product-gallery" aria-label="Product photo placeholder"></div>
+
+      <div class="product-info">
+        <span class="eyebrow">{{ product.Collection_id.title }}</span>
+        <h1>{{ product.title }}</h1>
+
+        <div class="price-row">
+          <span class="amount">${{ product.price }}</span>
+          {% if product.inventory > 0 %}
+            <span class="inventory-chip">{{ product.inventory }} available</span>
+          {% else %}
+            <span class="inventory-chip" style="background:#fceae7;color:#b62525;">Sold out</span>
+          {% endif %}
+        </div>
+
+        <p>{{ product.description }}</p>
+
+        <ul class="info-list">
+          <li><span>Collection</span><strong>{{ product.Collection_id.title }}</strong></li>
+          <li><span>Inventory</span><strong>{{ product.inventory }}</strong></li>
+          <li><span>Last updated</span><strong>{{ product.last_update|date:"M d, Y" }}</strong></li>
+        </ul>
+
+        <div class="actions-row">
+          <a href="{% url 'product_list' %}" class="btn btn-secondary">Back to products</a>
+          <a href="{% url 'cart' %}" class="btn btn-primary">Add to cart</a>
+        </div>
+
+        <div class="info-panel">
+          <strong>Tags</strong>
+          <div class="tag-list">
+            {% for tag in product.tags.all %}
+              <a href="{% url 'tag_detail' tag.id %}">{{ tag.label }}</a>
+            {% empty %}
+              <span class="empty-inline">This product has no tags yet.</span>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

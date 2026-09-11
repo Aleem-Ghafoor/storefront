@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}Checkout | Storefront{% endblock %}
+
+{% block content %}
+<section class="page-shell">
+  <div class="container">
+    <div class="page-header">
+      <h1>Checkout</h1>
+      <p>Finalize your order and review payment details.</p>
+    </div>
+
+    <div class="checkout-layout">
+      <div class="cart-panel">
+        <h3>Customer information</h3>
+        <div class="form-grid">
+          <div class="field">
+            <label for="full-name">Full name</label>
+            <input id="full-name" type="text" value="{{ user.get_full_name|default:'Guest Customer' }}" />
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input id="email" type="email" value="{{ user.email|default:'guest@example.com' }}" />
+          </div>
+          <div class="field">
+            <label for="phone">Phone</label>
+            <input id="phone" type="tel" value="{{ customer.phone_number|default:'+1234567890' }}" />
+          </div>
+        </div>
+      </div>
+
+      <aside class="summary-panel">
+        <h3>Order summary</h3>
+        <div class="summary-box">
+          {% for item in cart_items %}
+            <div class="summary-row">
+              <span>{{ item.product_id.title }} x {{ item.quantity }}</span>
+              <strong>${{ item.product_id.price }}</strong>
+            </div>
+          {% empty %}
+            <div class="summary-row">
+              <span>No items in the cart</span>
+              <strong>$0.00</strong>
+            </div>
+          {% endfor %}
+          <div class="summary-row total">
+            <span>Total</span>
+            <strong>${{ order_total|floatformat:2 }}</strong>
+          </div>
+        </div>
+
+        <div style="margin-top: 20px;">
+          <div class="summary-row">
+            <span>Payment status</span>
+            <span class="status-pill">{{ payment_status|default:'Pending' }}</span>
+          </div>
+          <div style="margin-top: 18px;">
+            <button class="btn btn-primary" style="width:100%;">Place order</button>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+{% endblock %}

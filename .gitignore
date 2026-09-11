@@ -1,0 +1,74 @@
+# ---------------------------
+# Python / virtual environments
+# ---------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+ENV/
+.virtualenvs/
+.venv*/
+venv*/
+.env/
+.python-version
+
+# ---------------------------
+# Django / local development
+# ---------------------------
+*.log
+*.sqlite3
+db.sqlite3
+db.sqlite3-journal
+media/
+staticfiles/
+local_settings.py
+
+# ---------------------------
+# Environment / secrets
+# ---------------------------
+.env
+.env.*
+*.env
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+*.secret
+secrets.*
+
+# ---------------------------
+# Editor / OS files
+# ---------------------------
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ---------------------------
+# Test / coverage / tooling
+# ---------------------------
+.coverage
+.coverage.*
+htmlcov/
+.pytest_cache/
+.tox/
+.nox/
+.mypy_cache/
+.ruff_cache/
+coverage.xml
+
+# ---------------------------
+# Temporary / generated files
+# ---------------------------
+*.tmp
+*.temp
+*.bak
+*.orig
+*.swp
+*.swo
