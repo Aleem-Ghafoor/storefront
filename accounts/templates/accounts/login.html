@@ -1,0 +1,89 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login | Storefront</title>
+    <meta
+      name="description"
+      content="Sign in to your Storefront account to continue shopping, manage your profile, and explore curated collections."
+    />
+    <link rel="stylesheet" href="{% static 'accounts/css/login.css' %}" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <div class="auth-layout">
+        <section class="info-panel" aria-label="Storefront overview">
+          <div class="brand">
+            <span class="brand-mark">S</span>
+            <span>Storefront</span>
+          </div>
+
+          <span class="eyebrow">Member access</span>
+          <h1>Welcome back to your curated world.</h1>
+          <p class="lead">
+            Sign in to continue exploring premium essentials, discover fresh arrivals,
+            and manage your account with a smooth and secure experience.
+          </p>
+
+          <ul class="feature-list">
+            <li>Quick access to your saved favorites</li>
+            <li>Faster checkout with your account details</li>
+            <li>Personalized picks based on your style</li>
+          </ul>
+        </section>
+
+        <section class="form-panel" aria-label="Login form">
+          <div class="form-header">
+            <h2>Sign in</h2>
+            <p>Use your Storefront credentials to continue.</p>
+          </div>
+
+          <form method="post" novalidate id="login-form">
+            {% csrf_token %}
+
+            <div class="field-group">
+              <label for="{{ form.username.id_for_label }}">Username</label>
+              {{ form.username }}
+              {% if form.username.errors %}
+                <ul class="errorlist">{{ form.username.errors }}</ul>
+              {% endif %}
+            </div>
+
+            <div class="field-group">
+              <label for="{{ form.password.id_for_label }}">Password</label>
+              <div class="password-wrap">
+                {{ form.password }}
+                <button type="button" id="toggle-password" aria-label="Show or hide password">
+                  Show
+                </button>
+              </div>
+              <div class="help-text">Keep your account secure and never share your password.</div>
+              {% if form.password.errors %}
+                <ul class="errorlist">{{ form.password.errors }}</ul>
+              {% endif %}
+            </div>
+
+            {% if form.non_field_errors %}
+              <ul class="errorlist">
+                {% for error in form.non_field_errors %}
+                  <li>{{ error }}</li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+
+            <button class="submit-btn" type="submit" id="submit-btn">Sign in</button>
+
+            <div class="muted-row">
+              <span>New to Storefront?</span>
+              <a href="{% url 'register' %}">Create account</a>
+            </div>
+          </form>
+        </section>
+      </div>
+    </div>
+
+    <script src="{% static 'accounts/js/login.js' %}"></script>
+  </body>
+</html>

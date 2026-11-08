@@ -1,159 +1,226 @@
-{% extends "base.html" %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Storefront | Home</title>
+    <meta
+      name="description"
+      content="Storefront is a modern digital retail destination focused on curated products, quality design, and an effortless shopping experience."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{% static 'accounts/css/home.css' %}" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container navbar">
+        <a href="{% url 'home' %}" class="brand" aria-label="Storefront home">
+          <span class="brand-mark">S</span>
+          <span>Storefront</span>
+        </a>
 
-{% block title %}Home | Storefront{% endblock %}
+        <nav class="nav-links" aria-label="Main navigation">
+          <a href="{% url 'home' %}">Home</a>
+          {% if user.is_authenticated %}
+            <a href="{% url 'home' %}">Account</a>
+          {% else %}
+            <a href="{% url 'login' %}">Account</a>
+          {% endif %}
+            <a href="#objective">Objective</a>
+            <a href="#experience">Experience</a>
+        </nav>
 
-{% block content %}
-<section class="hero-section">
-  <div class="container hero-grid">
-    <div class="hero-copy">
-      <span class="eyebrow">New season arrivals</span>
-      <h1>Designed for everyday living.</h1>
-      <p>
-        Discover premium essentials, limited collections, and everyday pieces
-        curated for a modern lifestyle.
-      </p>
-      <div class="hero-actions">
-        <a href="{% url 'product_list' %}" class="btn btn-primary">Shop collection</a>
-        <a href="{% url 'tag_list' %}" class="btn btn-secondary">Browse tags</a>
-      </div>
-      <div class="stat-row">
-        <div>
-          <strong>2.4k+</strong>
-          <span>happy shoppers</span>
-        </div>
-        <div>
-          <strong>120+</strong>
-          <span>products</span>
-        </div>
-        <div>
-          <strong>4.9/5</strong>
-          <span>customer rating</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="hero-visual">
-      <div class="feature-card large-card">
-        <span class="mini-label">Best seller</span>
-        <h3>{{ featured_product.title|default:"Signature Chair" }}</h3>
-        <p>{{ featured_product.description|truncatewords:16|default:"Crafted for comfort, detail, and everyday confidence." }}</p>
-        <div class="feature-meta">
-          <span>${{ featured_product.price|default:"129.00" }}</span>
-          <a href="{% if featured_product %}{% url 'product_detail' featured_product.product_id %}{% else %}{% url 'product_list' %}{% endif %}">View item</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="content-section">
-  <div class="container">
-    <div class="section-heading">
-      <div>
-        <span class="eyebrow">Featured products</span>
-        <h2>Popular picks this week</h2>
-      </div>
-      <a href="{% url 'product_list' %}" class="text-link">View all products</a>
-    </div>
-
-    <div class="product-grid">
-      {% for product in featured_products %}
-        <article class="product-card">
-          <div class="product-image">
-            <span class="badge">{% if product.inventory > 0 %}In stock{% else %}Sold out{% endif %}</span>
-          </div>
-          <div class="product-body">
-            <div class="meta-row">
-              <span>{{ product.Collection_id.title }}</span>
-              <span>${{ product.price }}</span>
+        <div class="auth-status" aria-label="Authentication status">
+          {% if user.is_authenticated %}
+            <div class="account-dock is-auth">
+              <form method="post" action="{% url 'logout' %}" class="logout-form">
+                {% csrf_token %}
+                <button type="submit" class="logout-btn" id="logout-btn">Log out</button>
+              </form>
             </div>
-            <h3>{{ product.title }}</h3>
-            <p>{{ product.description|truncatewords:14 }}</p>
-            <div class="card-actions">
-              <a href="{% url 'product_detail' product.product_id %}" class="btn btn-primary small">View details</a>
+          {% else %}
+            <div class="account-dock is-guest">
+              <a href="{% url 'login' %}" class="auth-link">Login</a>
+              <a href="{% url 'register' %}" class="auth-link auth-link-primary">Create account</a>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </header>
+
+    <section class="top-greeting" aria-label="Welcome banner">
+      <div class="container greeting-wrap">
+        {% if user.is_authenticated %}
+          <p class="greeting-label">Welcome back</p>
+          <h2 class="greeting-title">{{ user.username }}</h2>
+        {% else %}
+          <p class="greeting-label">Welcome</p>
+          <h2 class="greeting-title">Guest</h2>
+        {% endif %}
+      </div>
+    </section>
+
+    <main>
+      <section class="hero">
+        <div class="container hero-layout">
+          <article class="hero-card" data-reveal>
+            <span class="eyebrow">Digital retail platform</span>
+            <h1>Built to make everyday shopping premium and effortless.</h1>
+            <p>
+              Storefront combines curated product discovery, trusted checkout flow,
+              and a clean user experience so customers can find what they need with
+              confidence and speed.
+            </p>
+            <div class="hero-actions">
+              {% if user.is_authenticated %}
+                <span class="btn-primary welcome-chip">Signed in as {{ user.username }}</span>
+              {% else %}
+                <a href="{% url 'login' %}" class="btn-primary">Sign in to continue</a>
+              {% endif %}
+              <a href="#objective" class="btn-ghost">See project objective</a>
+            </div>
+
+            <div class="hero-meta">
+              <article>
+                <strong>Customer-first</strong>
+                <span>Fast navigation and clear buying journey</span>
+              </article>
+              <article>
+                <strong>Curated catalog</strong>
+                <span>Quality-focused products for daily life</span>
+              </article>
+              <article>
+                <strong>Trust-driven</strong>
+                <span>Secure account and transparent flow</span>
+              </article>
+            </div>
+          </article>
+
+          <aside class="story-panel" data-reveal>
+            <h2>What Storefront delivers</h2>
+            <p>
+              A focused commerce experience that helps users discover, decide, and
+              purchase without confusion.
+            </p>
+            <div class="story-grid">
+              <article>
+                <h3>Simple onboarding</h3>
+                <p>Registration and login designed for quick and secure access.</p>
+              </article>
+              <article>
+                <h3>Conversion clarity</h3>
+                <p>Clear product storytelling that supports confident choices.</p>
+              </article>
+              <article>
+                <h3>Responsive UI</h3>
+                <p>Consistent and polished interface across desktop and mobile.</p>
+              </article>
+              <article>
+                <h3>Scalable foundation</h3>
+                <p>Built to evolve with catalog growth and new user features.</p>
+              </article>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section" id="objective">
+        <div class="container" data-reveal>
+          <div class="section-head">
+            <div>
+              <h2>Project Objective</h2>
+              <p>
+                Build a professional online storefront that balances product discovery,
+                usability, and customer trust in one seamless platform.
+              </p>
+            </div>
+            <div class="pills" aria-label="Business focus">
+              <span class="pill">Usability</span>
+              <span class="pill">Performance</span>
+              <span class="pill">Trust</span>
+              <span class="pill">Scalability</span>
             </div>
           </div>
-        </article>
-      {% empty %}
-        <div class="empty-state full-width">
-          <p>No featured products are available yet.</p>
-        </div>
-      {% endfor %}
-    </div>
-  </div>
-</section>
 
-<section class="content-section muted-section">
-  <div class="container">
-    <div class="section-heading">
-      <div>
-        <span class="eyebrow">Collections</span>
-        <h2>Shop by category</h2>
-      </div>
-    </div>
-
-    <div class="collection-grid">
-      {% for collection in collections %}
-      <div class="collection-card">
-        <div class="collection-info">
-          <span class="mini-label">Collection</span>
-          <h3>{{ collection.title }}</h3>
-          <p>{{ collection.products.count }} curated items</p>
-        </div>
-      </div>
-      {% empty %}
-      <div class="empty-state full-width">
-        <p>No collections have been added yet.</p>
-      </div>
-      {% endfor %}
-    </div>
-  </div>
-</section>
-
-<section class="content-section">
-  <div class="container">
-    <div class="section-heading">
-      <div>
-        <span class="eyebrow">Popular now</span>
-        <h2>Best sellers</h2>
-      </div>
-    </div>
-
-    <div class="product-grid narrow-grid">
-      {% for product in popular_products %}
-        <article class="product-card compact-card">
-          <div class="product-image small-image"></div>
-          <div class="product-body">
-            <h3>{{ product.title }}</h3>
-            <p>${{ product.price }}</p>
+          <div class="objective">
+            <article>
+              <h3>Deliver a frictionless buyer journey</h3>
+              <p>
+                Reduce user effort from landing to account access with clear flows and
+                intuitive page structure.
+              </p>
+              <span class="badge">Primary objective</span>
+            </article>
+            <article>
+              <h3>Build confidence through design clarity</h3>
+              <p>
+                Use consistent visual hierarchy, readable content, and transparent
+                actions that make the platform feel dependable.
+              </p>
+              <span class="badge">User trust</span>
+            </article>
+            <article>
+              <h3>Enable long-term storefront growth</h3>
+              <p>
+                Keep the experience modular so catalog expansion and future commerce
+                features can be added smoothly.
+              </p>
+              <span class="badge">Business growth</span>
+            </article>
           </div>
-        </article>
-      {% empty %}
-        <div class="empty-state full-width">
-          <p>Popular products will appear here once inventory is added.</p>
         </div>
-      {% endfor %}
-    </div>
-  </div>
-</section>
+      </section>
 
-<section class="content-section muted-section">
-  <div class="container">
-    <div class="section-heading">
-      <div>
-        <span class="eyebrow">Tags</span>
-        <h2>Browse by style</h2>
+      <section class="section" id="experience">
+        <div class="container" data-reveal>
+          <div class="section-head">
+            <div>
+              <h2>Storefront Experience</h2>
+              <p>
+                A polished retail narrative shaped around real customer expectations.
+              </p>
+            </div>
+          </div>
+
+          <div class="testimonials">
+            <article class="testimonial">
+              <p>
+                "The interface feels premium and focused. I can quickly access what I
+                need without noise."
+              </p>
+              <footer>Early Access Shopper</footer>
+            </article>
+            <article class="testimonial">
+              <p>
+                "Everything from account login to browsing feels intentional and
+                professional."
+              </p>
+              <footer>Product Tester</footer>
+            </article>
+            <article class="testimonial">
+              <p>
+                "Storefront creates trust with clean design and a very smooth page
+                flow."
+              </p>
+              <footer>UX Review Team</footer>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>Storefront | Curated Essentials for Modern Living</p>
       </div>
-      <a href="{% url 'tag_list' %}" class="text-link">View all tags</a>
-    </div>
+    </footer>
 
-    <div class="tag-cloud">
-      {% for tag in tags %}
-        <a href="{% url 'tag_detail' tag.id %}" class="tag-pill">{{ tag.label }}</a>
-      {% empty %}
-        <p class="empty-inline">No tags available yet.</p>
-      {% endfor %}
-    </div>
-  </div>
-</section>
-{% endblock %}
+    <script src="{% static 'accounts/js/home.js' %}"></script>
+  </body>
+</html>
