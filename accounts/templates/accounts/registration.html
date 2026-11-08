@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Account | Storefront</title>
+    <meta
+      name="description"
+      content="Create your Storefront account to shop premium essentials, explore curated collections, and enjoy a seamless modern shopping experience."
+    />
+    <meta
+      name="keywords"
+      content="Storefront, modern online store, premium ecommerce website, boutique storefront, digital shopping, secure customer account, curated essentials"
+    />
+    <meta property="og:title" content="Storefront | Create Your Account" />
+    <meta
+      property="og:description"
+      content="Join Storefront for thoughtfully selected products, secure shopping, and a premium digital retail experience."
+    />
+    <style>
+      :root {
+        --bg: #f6f7fb;
+        --panel: #ffffff;
+        --panel-alt: #eef3ff;
+        --primary: #111827;
+        --primary-soft: #1f2937;
+        --accent: #4f46e5;
+        --accent-soft: #eef2ff;
+        --text: #1f2937;
+        --muted: #6b7280;
+        --line: #e5e7eb;
+        --success: #0f766e;
+        --success-soft: #ecfdf5;
+        --danger: #b91c1c;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        font-family: "Inter", "Segoe UI", sans-serif;
+        background: linear-gradient(135deg, #f5f7ff 0%, #eef6ff 100%);
+        color: var(--text);
+      }
+
+      .page-shell {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 48px 20px;
+      }
+
+      .auth-layout {
+        width: min(1100px, 100%);
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        background: rgba(255, 255, 255, 0.75);
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        border-radius: 28px;
+        overflow: hidden;
+        box-shadow: 0 30px 90px rgba(15, 23, 42, 0.12);
+        backdrop-filter: blur(12px);
+      }
+
+      .info-panel {
+        background: linear-gradient(160deg, var(--primary) 0%, #16213d 100%);
+        color: #fff;
+        padding: 56px 42px;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 1.1rem;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        margin-bottom: 32px;
+      }
+
+      .brand-mark {
+        width: 34px;
+        height: 34px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #a5b4fc 0%, #818cf8 100%);
+        border-radius: 12px;
+        color: #111827;
+        font-weight: 800;
+      }
+
+      .eyebrow {
+        display: inline-block;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        color: #dbeafe;
+        padding: 7px 12px;
+        border-radius: 999px;
+        font-size: 0.76rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 22px;
+      }
+
+      h1 {
+        margin: 0 0 18px;
+        font-size: clamp(2.2rem, 4vw, 3.5rem);
+        line-height: 1.08;
+        letter-spacing: -0.05em;
+      }
+
+      .lead {
+        margin: 0 0 28px;
+        color: rgba(255, 255, 255, 0.82);
+        font-size: 1.04rem;
+        line-height: 1.7;
+        max-width: 520px;
+      }
+
+      .feature-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: 14px;
+      }
+
+      .feature-list li {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: rgba(255, 255, 255, 0.92);
+        font-weight: 500;
+      }
+
+      .feature-list li::before {
+        content: "✓";
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        background: rgba(99, 102, 241, 0.18);
+        color: #c7d2fe;
+        font-weight: 700;
+      }
+
+      .form-panel {
+        background: #fff;
+        padding: 52px 36px;
+      }
+
+      .form-header {
+        margin-bottom: 28px;
+      }
+
+      .form-header h2 {
+        margin: 0 0 8px;
+        font-size: clamp(1.8rem, 3vw, 2.4rem);
+        letter-spacing: -0.04em;
+      }
+
+      .form-header p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.98rem;
+      }
+
+      .success-box {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: var(--success-soft);
+        color: var(--success);
+        border: 1px solid #a7f3d0;
+        padding: 12px 14px;
+        border-radius: 12px;
+        margin-bottom: 18px;
+        font-weight: 600;
+      }
+
+      form {
+        display: grid;
+        gap: 18px;
+      }
+
+      .field-group {
+        display: grid;
+        gap: 7px;
+      }
+
+      .field-group label {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--text);
+      }
+
+      .field-group input {
+        width: 100%;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 14px 15px;
+        font-size: 1rem;
+        color: var(--text);
+        background: #fff;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .field-group input:focus {
+        outline: none;
+        border-color: rgba(79, 70, 229, 0.55);
+        box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.12);
+      }
+
+      .help-text {
+        color: var(--muted);
+        font-size: 0.8rem;
+      }
+
+      .errorlist {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .errorlist li {
+        color: var(--danger);
+        font-size: 0.82rem;
+        margin-top: 4px;
+      }
+
+      .submit-btn {
+        border: 0;
+        border-radius: 12px;
+        background: linear-gradient(135deg, var(--accent) 0%, #4338ca 100%);
+        color: #fff;
+        font-size: 1rem;
+        font-weight: 700;
+        padding: 15px 18px;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        box-shadow: 0 12px 27px rgba(79, 70, 229, 0.25);
+      }
+
+      .submit-btn:hover {
+        transform: translateY(-1px);
+      }
+
+      .muted-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        color: var(--muted);
+        font-size: 0.9rem;
+        margin-top: 8px;
+      }
+
+      .muted-row a {
+        color: var(--accent);
+        text-decoration: none;
+        font-weight: 600;
+      }
+
+      @media (max-width: 860px) {
+        .auth-layout {
+          grid-template-columns: 1fr;
+        }
+
+        .info-panel,
+        .form-panel {
+          padding: 36px 22px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page-shell">
+      <div class="auth-layout">
+        <section class="info-panel" aria-label="Storefront overview">
+          <div class="brand">
+            <span class="brand-mark">S</span>
+            <span>Storefront</span>
+          </div>
+
+          <span class="eyebrow">Modern retail experience</span>
+          <h1>Shop beautifully. Live effortlessly.</h1>
+          <p class="lead">
+            Discover premium essentials, curated collections, and everyday products
+            designed for a refined digital lifestyle. Create your account to access a
+            smarter and more seamless shopping experience.
+          </p>
+
+          <ul class="feature-list">
+            <li>Secure account access and faster checkout</li>
+            <li>Exclusive offers and curated new arrivals</li>
+            <li>Personalized shopping for modern living</li>
+          </ul>
+        </section>
+
+        <section class="form-panel" aria-label="Create a Storefront account">
+          <div class="form-header">
+            <h2>Create an account</h2>
+            <p>Join the Storefront community and start shopping with confidence.</p>
+          </div>
+
+          {% if success %}
+            <div class="success-box" role="status">
+              Your Storefront account was created successfully.
+            </div>
+          {% endif %}
+
+          <form method="post" novalidate>
+            {% csrf_token %}
+
+            <div class="field-group">
+              <label for="{{ form.username.id_for_label }}">Username</label>
+              {{ form.username }}
+              {% if form.username.errors %}
+                <ul class="errorlist">{{ form.username.errors }}</ul>
+              {% endif %}
+            </div>
+
+            <div class="field-group">
+              <label for="{{ form.email.id_for_label }}">Email address</label>
+              {{ form.email }}
+              {% if form.email.errors %}
+                <ul class="errorlist">{{ form.email.errors }}</ul>
+              {% endif %}
+            </div>
+
+            <div class="field-group">
+              <label for="{{ form.password1.id_for_label }}">Password</label>
+              {{ form.password1 }}
+              <div class="help-text">Use at least 8 characters and avoid common choices.</div>
+              {% if form.password1.errors %}
+                <ul class="errorlist">{{ form.password1.errors }}</ul>
+              {% endif %}
+            </div>
+
+            <div class="field-group">
+              <label for="{{ form.password2.id_for_label }}">Confirm password</label>
+              {{ form.password2 }}
+              {% if form.password2.errors %}
+                <ul class="errorlist">{{ form.password2.errors }}</ul>
+              {% endif %}
+            </div>
+
+            {% if form.non_field_errors %}
+              <ul class="errorlist">
+                {% for error in form.non_field_errors %}
+                  <li>{{ error }}</li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+
+            <button type="submit" class="submit-btn">Create account</button>
+
+            <div class="muted-row">
+              <span>Already have an account?</span>
+              <a href="{% url 'login' %}">Sign in</a>
+            </div>
+          </form>
+        </section>
+      </div>
+    </div>
+  </body>
+</html>
